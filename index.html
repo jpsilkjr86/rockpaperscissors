@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="container">
+
+      <!-- Put text in jumbotron for visibility -->
+      <div class="jumbotron text-center">
+
+        <h1>Rock, Paper, Scissors</h1>
+        <p>Enter r for rock, p for paper, s for scissors.</p>
+
+        <!-- Empty elements, replaced by JavaScript functions when user presses key -->
+        <p><span id="userChoiceText" class="text-success"></span></p>
+
+        <p><span id="compChoiceText" class="text-warning"></span></p>
+
+        <p><strong><span id="whoWinsText" class="text-primary"></span></strong></p>
+
+        <small><span id="scoreBoard" class="text-info"></span></small>
+
+      </div>
+    </div>
+
+    <!-- BEGIN JAVASCRIPT -->
+    <script type="text/javascript">
+      
+      // ******DECLARE VARIABLES*******
+      var userChoice = "";
+      var compChoice = "";
+      var whoWins = "";
+      var randomNum0to2 = null;
+      var numTies = 0;
+      var numWins = 0;
+      var numLosses = 0;
+
+      // ******INITIALIZE GAME****** -- onkeyup event starts the gameFunction program, assigns userChoice
+      document.onkeyup = function(event)
+      {
+        if (event.key === "r")
+        {
+          userChoice = "Rock";
+        }
+
+        if (event.key === "p")
+        {
+          userChoice = "Paper";
+        }
+
+        if (event.key === "s")
+        {
+          userChoice = "Scissors";
+        }
+
+        console.log("userChoice: " + userChoice);
+        gameFunction(userChoice);
+      }
+
+
+      // ******DECLARE FUNCTIONS*******
+
+      // Main game function to carry out and order all tasks, called when user enters the choice
+      function gameFunction (userChoice)
+      {
+        displayUserChoice(userChoice);
+        compChoice = genCompChoice();
+        displayCompChoice(compChoice);
+        whoWins = determineWinner(userChoice, compChoice);
+        displayWinner(whoWins);
+        displayScoreBoard();
+      }
+
+      // Function to display user choice on HTML
+      function displayUserChoice(userChoice)
+      {
+        document.getElementById("userChoiceText").innerHTML = "Your Choice: " + userChoice;
+      }
+
+      // Function to generate computer choice
+      function genCompChoice()
+      {
+        // In-built function to generate random whole number between 0 and 2
+        randomNum0to2 = Math.floor(Math.random() * 3);
+        console.log("randomNum0to2: " + randomNum0to2);
+
+        // Assigns variable compChoice a value Rock, Paper or Scissors according to random whole number generated
+        if (randomNum0to2===0)
+        {
+          compChoice = "Rock";
+        }
+
+        if (randomNum0to2===1)
+        {
+          compChoice = "Paper";
+        }
+
+        if (randomNum0to2===2)
+        {
+          compChoice = "Scissors";
+        }
+
+        console.log("compChoice: " + compChoice);
+        return(compChoice);
+      }
+
+      // Function to display computer choice on HTML
+      function displayCompChoice(compChoice)
+      {
+        document.getElementById("compChoiceText").innerHTML = "Computer's Choice: " + compChoice;
+      }
+
+      // Function to compare choices and determine winner, created by James and Tom:
+      function determineWinner(userChoice, compChoice)
+      {
+        if ((userChoice==="Rock") && (compChoice === "Scissors")) 
+        {
+            whoWins = "You Win!";
+            numWins++;
+        }
+        if ((userChoice==="Rock") && (compChoice === "Paper")) 
+        {
+            whoWins = "Computer Wins.";
+            numLosses++;
+        }
+        if ((userChoice==="Scissors") && (compChoice === "Paper")) 
+        {
+            whoWins = "You Win!";
+            numWins++;
+        }
+        if ((userChoice==="Scissors") && (compChoice === "Rock")) 
+        {
+            whoWins = "Computer Wins.";
+            numLosses++;
+        }
+        if ((userChoice==="Paper") && (compChoice === "Scissors")) 
+        {
+            whoWins = "Computer Wins.";
+            numLosses++;
+        }
+        if ((userChoice==="Paper") && (compChoice === "Rock")) 
+        {
+            whoWins = "You Win!";
+            numWins++;
+        }
+        if ((userChoice===compChoice)) 
+        {
+            whoWins = "It's a tie.";
+            numTies++;
+        }
+
+        return(whoWins);
+      }
+
+      // Function to display winner:
+      function displayWinner(whoWins)
+      {
+        document.getElementById("whoWinsText").innerHTML = "Result: " + whoWins;
+      }
+
+      function displayScoreBoard()
+      {
+        var scoreBoardText = "<p>Wins: " + numWins + "<br>" +
+        "Losses: " + numLosses + "<br>" +
+        "Ties: " + numTies + "</p>"
+
+        document.getElementById("scoreBoard").innerHTML = "<p>Score Board:</p>" + scoreBoardText;
+      }
+
+    </script>
+    
+  </body>
+</html>
