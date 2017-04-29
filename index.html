@@ -21,7 +21,7 @@
 
         <p><span id="compChoiceText" class="text-warning"></span></p>
 
-        <p><strong><span id="whoWinsText" class="text-primary"></span></strong></p>
+        <p><strong><span id="resultText" class="text-primary"></span></strong></p>
 
         <small><span id="scoreBoard" class="text-info"></span></small>
 
@@ -43,23 +43,22 @@
       // ******INITIALIZE GAME****** -- onkeyup event starts the gameFunction program, assigns userChoice
       document.onkeyup = function(event)
       {
-        if (event.key === "r")
+        if (event.key === "r" || event.key === "R")
         {
           userChoice = "Rock";
+          gameFunction(userChoice);
         }
-
-        if (event.key === "p")
+        else if (event.key === "p" || event.key === "P")
         {
           userChoice = "Paper";
+          gameFunction(userChoice);
         }
-
-        if (event.key === "s")
+        else if (event.key === "s" || event.key === "S")
         {
           userChoice = "Scissors";
+          gameFunction(userChoice);
         }
-
-        console.log("userChoice: " + userChoice);
-        gameFunction(userChoice);
+        else { document.getElementById("resultText").innerHTML = "Invalid input.";}
       }
 
 
@@ -160,7 +159,7 @@
       // Function to display winner:
       function displayWinner(whoWins)
       {
-        document.getElementById("whoWinsText").innerHTML = "Result: " + whoWins;
+        document.getElementById("resultText").innerHTML = "Result: " + whoWins;
       }
 
       function displayScoreBoard()
